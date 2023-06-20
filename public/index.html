@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minesweeper Generator</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="p-8 bg-gray-100">
+    <div class="container mx-auto">
+        <h1 class="text-2xl mb-4">Discord Minesweeper Generator</h1>
+        <form id="generator-form" class="mb-8">
+            <label class="block">
+                <span class="text-gray-700">Size</span>
+                <select name="size" class="form-select mt-1 block w-full">
+                    <option value="Small">Small</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Large">Large</option>
+                </select>
+            </label>
+            <label class="block mt-4">
+                <span class="text-gray-700">Difficulty</span>
+                <select name="difficulty" class="form-select mt-1 block w-full">
+                    <option value="Easy">Easy</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Hard">Hard</option>
+                </select>
+            </label>
+            <button type="submit" class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Generate</button>
+        </form>
+        <div id="field-container" class="grid grid-cols-1 gap-4">
+            <!-- Generated fields will be inserted here -->
+        </div>
+    </div>
+    <script>
+        document.getElementById('generator-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const size = event.target.size.value;
+            const difficulty = event.target.difficulty.value;
+            fetch('/generate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ size, difficulty }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                const fieldContainer = document.getElementById('field-container');
+                fieldContainer.innerHTML = '';
+                data.fields.forEach(field => {
+                    const pre = document.createElement('pre');
+                    pre.textContent = field;
+                    pre.classList.add('p-4', 'bg-white', 'shadow', 'rounded', 'overflow-x-auto');
+                    const button = document.createElement('button');
+                    button.textContent = 'Copy to clipboard';
+                    button.classList.add('mt-2', 'bg-blue-500', 'hover:bg-blue-700', 'text-white', 'font-bold', 'py-2', 'px-4', 'rounded');
+                    button.addEventListener('click', () => {
+                        navigator.clipboard.writeText(field).then(() => {
+                            alert('Copied to clipboard!');
+                        }, () => {
+                            alert('Failed to copy text.');
+                        });
+                    });
+                    const div = document.createElement('div');
+                    div.classList.add('bg-gray-200', 'p-4', 'my-4', 'rounded');
+                    div.appendChild(pre);
+                    div.appendChild(button);
+                    fieldContainer.appendChild(div);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
