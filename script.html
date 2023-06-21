@@ -4,6 +4,16 @@
     <title>Discord Minesweeper Game Generator</title>
   </head>
   <body>
+    <select id="size">
+      <option value="Small">Small</option>
+      <option value="Medium" selected>Medium</option>
+      <option value="Large">Large</option>
+    </select>
+    <select id="difficulty">
+      <option value="Easy">Easy</option>
+      <option value="Medium" selected>Medium</option>
+      <option value="Hard">Hard</option>
+    </select>
     <button id="generate">Generate Game</button>
     <pre id="output"></pre>
 
@@ -81,9 +91,6 @@
           'Large': [9, 9],
         };
         let difficultyMap = {
-          'Here is the remaining part of the code:
-
-```html
           'Easy': 5,
           'Medium': 14,
           'Hard': 20,
