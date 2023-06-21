@@ -1,15 +1,3 @@
-const express = require('express');
-const cors = require('cors');
-const opn = require('opn');
-const bodyParser = require('body-parser');
-const path = require('path');
-
-
-
-const app = express();
-app.use(cors());
-app.use(bodyParser.json());
-
 // Define the emoji representations
 const numberEmojis = ['||:zero:||', '||:one:||', '||:two:||', '||:three:||', '||:four:||', '||:five:||', '||:six:||', '||:seven:||', '||:eight:||'];
 const mine = '||:boom:||';
@@ -73,9 +61,9 @@ function splitField(field, maxWidth=9, maxHeight=9) {
   return sections;
 }
 
-app.post('/generate', (req, res) => {
-  let size = req.body.size;
-  let difficulty = req.body.difficulty;
+document.getElementById('generate').addEventListener('click', function() {
+  let size = document.getElementById('size').value;
+  let difficulty = document.getElementById('difficulty').value;
   let sizeMap = {
     'Small': [5, 5],
     'Medium': [8, 8],
@@ -91,16 +79,5 @@ app.post('/generate', (req, res) => {
   let field = createField(width, height, mines);
   let sections = splitField(field);
   let sectionsStr = sections.map(printField);
-  res.json({fields: sectionsStr});
-});
-
-app.get('/', (req, res) => {
-  // Assuming you have a file `index.html` in a directory named `public`
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
-
-const port = 8080;
-app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
-  opn(`http://localhost:${port}`);
+  document.getElementById('output').innerText = sectionsStr.join('\n\n');
 });
