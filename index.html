@@ -12,7 +12,7 @@
         <form id="generator-form" class="mb-8">
             <label class="block">
                 <span class="text-gray-700">Size</span>
-                <select name="size" class="form-select mt-1 block w-full">
+                <select id="size" name="size" class="form-select mt-1 block w-full">
                     <option value="Small">Small</option>
                     <option value="Medium">Medium</option>
                     <option value="Large">Large</option>
@@ -20,55 +20,38 @@
             </label>
             <label class="block mt-4">
                 <span class="text-gray-700">Difficulty</span>
-                <select name="difficulty" class="form-select mt-1 block w-full">
+                <select id="difficulty" name="difficulty" class="form-select mt-1 block w-full">
                     <option value="Easy">Easy</option>
                     <option value="Medium">Medium</option>
                     <option value="Hard">Hard</option>
                 </select>
             </label>
-            <button type="submit" class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Generate</button>
+            <button id="generate" type="button" class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Generate</button>
         </form>
-        <div id="field-container" class="grid grid-cols-1 gap-4">
+        <div id="output" class="grid grid-cols-1 gap-4">
             <!-- Generated fields will be inserted here -->
         </div>
     </div>
     <script>
-        document.getElementById('generator-form').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const size = event.target.size.value;
-            const difficulty = event.target.difficulty.value;
-            fetch('/generate', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ size, difficulty }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                const fieldContainer = document.getElementById('field-container');
-                fieldContainer.innerHTML = '';
-                data.fields.forEach(field => {
-                    const pre = document.createElement('pre');
-                    pre.textContent = field;
-                    pre.classList.add('p-4', 'bg-white', 'shadow', 'rounded', 'overflow-x-auto');
-                    const button = document.createElement('button');
-                    button.textContent = 'Copy to clipboard';
-                    button.classList.add('mt-2', 'bg-blue-500', 'hover:bg-blue-700', 'text-white', 'font-bold', 'py-2', 'px-4', 'rounded');
-                    button.addEventListener('click', () => {
-                        navigator.clipboard.writeText(field).then(() => {
-                            alert('Copied to clipboard!');
-                        }, () => {
-                            alert('Failed to copy text.');
-                        });
-                    });
-                    const div = document.createElement('div');
-                    div.classList.add('bg-gray-200', 'p-4', 'my-4', 'rounded');
-                    div.appendChild(pre);
-                    div.appendChild(button);
-                    fieldContainer.appendChild(div);
-                });
-            });
+        document.getElementById('generate').addEventListener('click', function() {
+            let size = document.getElementById('size').value;
+            let difficulty = document.getElementById('difficulty').value;
+            let sizeMap = {
+                'Small': [5, 5],
+                'Medium': [8, 8],
+                'Large': [9, 9],
+            };
+            let difficultyMap = {
+                'Easy': 5,
+                'Medium': 14,
+                'Hard': 20,
+            };
+            let [width, height] = sizeMap[size];
+            let mines = difficultyMap[difficulty];
+            let field = createField(width, height, mines);
+            let sections = splitField(field);
+            let sectionsStr = sections.map(printField);
+            document.getElementById('output').innerText = sectionsStr.join('\n\n');
         });
     </script>
 </body>
