@@ -9,7 +9,6 @@ for(let i=-1; i<=1; i++) {
     if(i !== 0 || j !== 0) offsets.push([i, j]);
   }
 }
-
 function createField(width, height, mines) {
   // Create an empty field
   let field = Array(height).fill().map(() => Array(width).fill(0));
