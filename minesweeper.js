@@ -82,13 +82,13 @@ document.getElementById('generate').addEventListener('click', () => {
     let difficulty = document.getElementById('difficulty').value;
     let size = document.getElementById('size').value;
     
-    let width, height, mines;
+    let width, height, mines, maxWidth, maxHeight;
     if(size === 'small') {
-        width = height = 5;
+        width = height = maxWidth = maxHeight = 5;
     } else if(size === 'medium') {
-        width = height = 7;
+        width = height = maxWidth = maxHeight = 7;
     } else {
-        width = height = 9;
+        width = height = maxWidth = maxHeight = 9;
     }
     
     if(difficulty === 'easy') {
@@ -100,7 +100,7 @@ document.getElementById('generate').addEventListener('click', () => {
     }
     
     let field = createField(width, height, mines);
-    let sections = splitField(field);
+    let sections = splitField(field, maxWidth, maxHeight);
     let code = sections.map(printField).join('\n\n');
     
     // Display the generated code in the output area
@@ -112,3 +112,4 @@ document.getElementById('copy').addEventListener('click', () => {
     let code = document.getElementById('code').textContent;
     navigator.clipboard.writeText(code);
 });
+
