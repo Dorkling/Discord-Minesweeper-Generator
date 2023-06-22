@@ -84,14 +84,13 @@ document.getElementById('generate').addEventListener('click', () => {
     
     let width, height, mines;
     if(size === 'small') {
-        width = height = 9;
+        width = height = 5;
     } else if(size === 'medium') {
-        width = height = 16;
+        width = height = 7;
     } else {
-        width = height = 24;
-
+        width = height = 9;
     }
-
+    
     if(difficulty === 'easy') {
         mines = Math.floor(0.1 * width * height);
     } else if(difficulty === 'medium') {
