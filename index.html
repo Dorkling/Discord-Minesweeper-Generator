@@ -1,66 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minesweeper Generator</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+    <title>Discord Minesweeper Generator</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #1a202c;
+            color: #a0aec0;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 2rem;
+        }
+        #output {
+            margin-top: 2rem;
+            padding: 1rem;
+            background-color: #2d3748;
+            border-radius: 0.375rem;
+        }
+    </style>
 </head>
-<body class="p-8 bg-gray-100">
-    <div class="container mx-auto">
-        <h1 class="text-2xl mb-4">Discord Minesweeper Generator</h1>
-        <form id="generator-form" class="mb-8">
-            <label class="block">
-                <span class="text-gray-700">Size</span>
-                <select id="size" name="size" class="form-select mt-1 block w-full">
-                    <option value="Small">Small</option>
-                    <option value="Medium">Medium</option>
-                    <option value="Large">Large</option>
-                </select>
-            </label>
-            <label class="block mt-4">
-                <span class="text-gray-700">Difficulty</span>
-                <select id="difficulty" name="difficulty" class="form-select mt-1 block w-full">
-                    <option value="Easy">Easy</option>
-                    <option value="Medium">Medium</option>
-                    <option value="Hard">Hard</option>
-                </select>
-            </label>
-            <button id="generate" type="button" class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Generate</button>
-            <button id="copy-to-clipboard" class="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Copy to Clipboard</button>
-        </form>
-        <div id="output" class="grid grid-cols-1 gap-4">
-            <!-- Generated fields will be inserted here -->
+<body>
+    <div class="container">
+        <h1 class="text-3xl text-center mb-4">Discord Minesweeper Generator</h1>
+        <div class="mb-4">
+            <label for="difficulty" class="block mb-2">Difficulty:</label>
+            <select id="difficulty" class="block w-full p-2 rounded border-gray-300 shadow">
+                <option value="easy">Easy</option>
+                <option value="medium">Medium</option>
+                <option value="hard">Hard</option>
+            </select>
+        </div>
+        <div class="mb-4">
+            <label for="size" class="block mb-2">Size:</label>
+            <select id="size" class="block w-full p-2 rounded border-gray-300 shadow">
+                <option value="small">Small</option>
+                <option value="medium">Medium</option>
+                <option value="large">Large</option>
+            </select>
+        </div>
+        <div class="mb-4">
+            <button id="generate" class="block w-full p-2 rounded bg-blue-500 hover:bg-blue-600 text-white">Generate Code</button>
+        </div>
+        <div id="output" class="mb-4">
+            <p id="code"></p>
+        </div>
+        <div>
+            <button id="copy" class="block w-full p-2 rounded bg-green-500 hover:bg-green-600 text-white">Copy to Clipboard</button>
         </div>
     </div>
-    <script>
-        // Define the emoji representations
-        const numberEmojis = ['||:zero:||', '||:one:||', '||:two:||', '||:three:||', '||:four:||', '||:five:||', '||:six:||', '||:seven:||', '||:eight:||'];
-        const mine = '||:boom:||';
-
-        // Offsets to find surrounding cells
-        let offsets = [];
-        for(let i=-1; i<=1; i++) {
-          for(let j=-1; j<=1; j++) {
-            if(i !== 0 || j !== 0) offsets.push([i, j]);
-          }
-        }
-
-        function createField(width, height, mines) {
-          // Create an empty field
-          let field = Array(height).fill().map(() => Array(width).fill(0));
-
-          // Place mines
-          for(let i = 0; i < mines; i++) {
-            while(true) {
-              let x = Math.floor(Math.random() * width);
-              let y = Math.floor(Math.random() * height);
-              if(field[y][x] === 0) {
-                field[y][x] = mine;
-                break;
-              }
-            }
-          }
-
-          //
-        }
+    <script src="minesweeper.js"></script>
+</body>
+</html>
