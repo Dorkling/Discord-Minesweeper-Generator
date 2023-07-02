@@ -84,8 +84,8 @@ document.getElementById('generate').addEventListener('click', () => {
     
     let width, height, mines;
     if(size === 'small') {
-        width = 6 
-        height = 5;
+        width = 6;
+      height = 5;
     } else if(size === 'medium') {
         width = height = 7;
     } else {
