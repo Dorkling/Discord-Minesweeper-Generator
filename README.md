@@ -4,7 +4,7 @@ This is a simple, static website that allows you to generate Minesweeper games i
 # Features
 Three difficulty levels: Easy, Medium, Hard
 
-Three sizes: Small (5x5), Medium (7x7), Large (9x9)
+Three sizes: Small (5x6), Medium (7x7), Large (9x9)
 
 "Copy to Clipboard" button for easy copying of the generated game
 
@@ -21,3 +21,4 @@ Paste the game into Discord. _The game will be hidden by spoiler tags, and playe
 
 forked from main so I can make some changes because I am lazy :)
 
+Small size should fit discord about me.
