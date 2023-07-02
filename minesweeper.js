@@ -1,6 +1,6 @@
 // Define the emoji representations for the Minesweeper game
 let numberEmojis = [
-  '||:zero:||', 
+  ':o:', 
   '||:one:||', 
   '||:two:||', 
   '||:three:||', 
@@ -10,7 +10,7 @@ let numberEmojis = [
   '||:seven:||', 
   '||:eight:||'
 ];
-let mine = '||:boom:||';
+let mine = '||:x:||';
 
 // Define the offsets to find surrounding cells in the game grid
 let offsets = [];
